@@ -1,9 +1,46 @@
 <html>
   <head>
-    <title>Video Streaming Demonstration</title>
+    <title>Pan/Tilt Servo Camera Stream</title>
   </head>
   <body>
-    <h1>Video Streaming Demonstration</h1>
+    <h1>Pan/Tilt Servo Camera Stream</h1>
     <img src="{{ url_for('video_feed') }}">
+	
+
+<div id="slidecontainer">
+  <p>pan: <span id="pan_value"></span><input type="range" min="{{minPan}}" max="{{maxPan}}" value="{{initPan}}" id="pan" style="width:100%;"></p>
+  <p>tilt: <span id="tilt_value"></span><input type="range" min="{{minTilt}}" max="{{maxTilt}}" value="{{initTilt}}" id="tilt" style="width:100%;"></p>
+</div>
+
+<script>
+var panSlider = document.getElementById("pan");
+var panOutput = document.getElementById("pan_value");
+panOutput.innerHTML = panSlider.value;
+
+var tiltSlider = document.getElementById("tilt");
+var tiltOutput = document.getElementById("tilt_value");
+tiltOutput.innerHTML = tiltSlider.value;
+
+panSlider.oninput = function() {
+  panOutput.innerHTML = panSlider.value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    }
+  };
+  xhttp.open("GET", window.location.origin + "/set_pan?pan=" + panSlider.value, true);
+  xhttp.send();
+}
+tiltSlider.oninput = function() {
+  tiltOutput.innerHTML = tiltSlider.value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    }
+  };
+  xhttp.open("GET", window.location.origin + "/set_tilt?tilt=" + tiltSlider.value, true);
+  xhttp.send();
+}
+</script>
   </body>
 </html>

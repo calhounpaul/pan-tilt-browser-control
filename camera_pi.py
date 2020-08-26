@@ -10,7 +10,7 @@ class Camera(BaseCamera):
         with picamera.PiCamera() as camera:
             # let camera warm up
             time.sleep(2)
-
+            camera.vflip=1 #add this if your pan/tilt system works better with the ribbon port on top
             stream = io.BytesIO()
             for _ in camera.capture_continuous(stream, 'jpeg',
                                                  use_video_port=True):
